@@ -157,11 +157,11 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
     port!.openReadWrite();
 
     port!.config = SerialPortConfig()
-      ..baudRate = 9600
-      ..bits = 8
-      ..stopBits = 1
-      ..parity = SerialPortParity.none
-      ..setFlowControl(SerialPortFlowControl.none);
+      ..baudRate = 57600;
+      // ..bits = 8
+      // ..stopBits = 1
+      // ..parity = SerialPortParity.none
+      // ..setFlowControl(SerialPortFlowControl.none);
 
     final reader = SerialPortReader(port!);
     reader.stream.listen((data) {
