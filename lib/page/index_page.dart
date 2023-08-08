@@ -141,16 +141,27 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
   Future<void> serialTest() async {
     String name = '/COM2';
 
-    port = SerialPort(name);
-    // var config = SerialPortConfig();
-    // config.baudRate = 19200;
-    // port.config= config;
-    if (!port!.openReadWrite()) {
-      print(SerialPort.lastError);
-      return;
-    }
+    // port = SerialPort(name);
+    // // var config = SerialPortConfig();
+    // // config.baudRate = 19200;
+    // // port.config= config;
+    // if (!port!.openReadWrite()) {
+    //   print(SerialPort.lastError);
+    //   return;
+    // }
+
     // 05000009B7F0
     // 05008A1B98B2
+
+     port = SerialPort(name);
+    port!.openReadWrite();
+
+    port!.config = SerialPortConfig()
+      ..baudRate = 9600
+      ..bits = 8
+      ..stopBits = 1
+      ..parity = SerialPortParity.none
+      ..setFlowControl(SerialPortFlowControl.none);
 
     final reader = SerialPortReader(port!);
     reader.stream.listen((data) {
