@@ -139,7 +139,7 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
   var wait = false;
   SerialPort? port;
   Future<void> serialTest() async {
-    String name = '/dev/ttyUSB7';
+    String name = '/COM2';
 
     port = SerialPort(name);
     // var config = SerialPortConfig();
@@ -166,9 +166,9 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
 
 
 
+    // 09 00 01 04 00 00 80 14 DD 23
 
-
-    var bytes = Uint8List.fromList([0x05, 0x00, 0x00, 0x09, 0xB7, 0xF0]);
+    var bytes = Uint8List.fromList([0x09, 0x00, 0x01, 0x04, 0x00, 0x00,0x80,0x14,0xDD,0x23]);
     print(bytes);
     port!.write(bytes);
 

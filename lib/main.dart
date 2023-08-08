@@ -8,9 +8,9 @@ import 'package:rfid/page/index_page.dart';
 
 void main() async {
   // await ScreenUtil.ensureScreenSize();
-  await GetStorage.init('member_storage');
-  await GetStorage.init('total_storage');
-  await GetStorage.init('arrears_storage');
+  // await GetStorage.init('member_storage');
+  // await GetStorage.init('total_storage');
+  // await GetStorage.init('arrears_storage');
   // SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
   //   //设置状态栏颜色
   //   statusBarColor: Colors.red,
