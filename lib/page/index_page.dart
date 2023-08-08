@@ -141,19 +141,7 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
   Future<void> serialTest() async {
     String name = '/COM2';
 
-    // port = SerialPort(name);
-    // // var config = SerialPortConfig();
-    // // config.baudRate = 19200;
-    // // port.config= config;
-    // if (!port!.openReadWrite()) {
-    //   print(SerialPort.lastError);
-    //   return;
-    // }
-
-    // 05000009B7F0
-    // 05008A1B98B2
-
-     port = SerialPort(name);
+    port = SerialPort(name);
     port!.openReadWrite();
 
     port!.config = SerialPortConfig()
@@ -164,35 +152,39 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
       // ..setFlowControl(SerialPortFlowControl.none);
 
     final reader = SerialPortReader(port!);
+    String result = "";
     reader.stream.listen((data) {
       print('received: $data');
-      // print('receivedString: ${utf8.decode(data)}'); // 转换为字符串
-      data.map((byte) => print(byte));
       String hexString = data.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
       print('receivedHex: ${hexString.toUpperCase()}'); // 转换为16进制
+      result += hexString.toUpperCase();
+      String status = result.substring(6,8);
+      print("status = $status");
+      //01= 命令结束  02=查询超时  03=还有数据  04=数据满 F8=天线断开  26=统计数据
+      if(status == "01" || status == "02" || status == "04" || status == "F8"){
+        port!.close();
+      }
+      if(status == "03"){
+
+      }
     },onError: (e){
-
+      print(e);
     },onDone: (){
-
+      print("onDone");
+      _dealData(result);
     });
-
-
-
     // 09 00 01 04 00 00 80 14 DD 23
 
     var bytes = Uint8List.fromList([0x09, 0x00, 0x01, 0x04, 0x00, 0x00,0x80,0x14,0xDD,0x23]);
     print(bytes);
     port!.write(bytes);
-
-    // print(port.read(port.bytesAvailable,timeout: 1000));
-
-
-    // bytes = Uint8List.fromList([0x05, 0x00, 0x8A, 0x1B, 0x98, 0xB2]);
-    // print(bytes);
-    // port.write(bytes);
-
-    // port.close();
   }
+
+  _dealData(String result){
+    print("lenth = ${result.length}");
+  }
+
+
 
   _itemWidget(index) {
     var item = _viewModel[index];
