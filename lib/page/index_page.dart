@@ -37,7 +37,7 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
   initState(){
     super.initState();
     serialTest1();
-    // serialTest();
+    serialTest();
     _tabController = TabController(length: tabs.length, vsync: this);
     _tabController.addListener((){
       currentIndex.value = _tabController.index;
@@ -166,7 +166,8 @@ class _IndexState extends State<Index>  with TickerProviderStateMixin {
     final reader = SerialPortReader(port!);
     reader.stream.listen((data) {
       print('received: $data');
-      print('receivedString: ${utf8.decode(data)}'); // 转换为字符串
+      // print('receivedString: ${utf8.decode(data)}'); // 转换为字符串
+      data.map((byte) => print(byte));
       String hexString = data.map((byte) => byte.toRadixString(16).padLeft(2, '0')).join();
       print('receivedHex: ${hexString.toUpperCase()}'); // 转换为16进制
     },onError: (e){
