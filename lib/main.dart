@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:major_statistics/page/index_page.dart';
+import 'package:rfid/page/index_page.dart';
 
 
 void main() async {
